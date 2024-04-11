@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo Desembaralha</title>
+    <!--
+
+    -->
+    <style>
+        body {
+            /*background-color: #292929;*/
+            background-image: url('/Imagens/back.jpg');
+            background-repeat: repeat;
+            color: #fff;
+            /*background: url('/Imagens/fundo.jpg');*/
+            /*background-size: cover;*/
+
+        }
+
+        #score {
+            width: 100px;
+            float: right;
+            font-size: 100px;
+            color: white;
+            opacity: 1;
+
+        }
+
+        #principal {
+            width: 500px;
+            height: 500px;
+            background-color: #A34231;
+            border-radius: 50px;
+            box-shadow: 0px 0px 100px 0px #9B1C12;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            opacity: 0.8;
+
+        }
+
+        #startView {
+            align-items: center;
+            width: 300px;
+            height: 100px;
+            margin: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 1;
+            text-align: center;
+            font-size: 30px;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-weight: bolder;
+            font-style: italic;
+            color: #292929;
+
+
+
+
+        }
+
+        #gameView {
+
+            width: 500px;
+            height: 400px;
+            margin: auto;
+            display: flex;
+            justify-content: end;
+            align-items: end;
+        }
+
+        #gameView>:nth-child(3) {
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+
+        #gameView>:nth-child(4) {
+            margin-top: 90px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+
+        #start {
+            width: 200px;
+            height: 50px;
+            font-size: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-style: italic;
+            font-weight: bolder;
+            background-color: #014040;
+
+            border-radius: 15px;
+            opacity: 1;
+        }
+        #nome_jogo{
+            color: white;
+        }
+
+        #score {
+            color: black;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            width: 50px;
+            font-size: 50px;
+            text-align: center;
+
+        }
+
+        #word {
+            color: black;
+            width: 100px;
+            text-align: center;
+            font-size: 20px;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-weight: 900;
+        }
+
+        #sortable {
+            width: 300px;
+            height: 100px;
+            margin-left: auto;
+        }
+
+        #sortable li {
+            border-radius: 10px;
+            cursor: grab;
+
+        }
+
+        #sortable li:hover {
+            height: 60px;
+            box-shadow: 5px 5px 50px black;
+            transition-delay: 1s;
+            transition-property: background-color;
+        }
+
+        #sortable li:active {
+            border-radius: 10px;
+            cursor: grabbing;
+
+        }
+
+
+        #div_botoes {
+
+            height: 70px;
+            width: 320px;
+            margin: auto;
+            margin-top: 50px;
+
+
+        }
+
+        .check,
+        .help {
+            background-color: #D62000;
+            color: white;
+            height: 65px;
+            width: 150px;
+            border: 1px solid white;
+            border-radius: 10px;
+            font-size: 20px;
+            margin-left: 1px;
+            box-shadow: 2px 2px 2px black;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+
+        }
+
+        .help {
+
+            background-image: url('/Imagens/lampada.png');
+            background-repeat: no-repeat;
+            background-position: right;
+            background-size: 40px;
+
+
+        }
+
+        .check:hover {
+            box-shadow: 2px 2px 50px 10px white;
+            height: 90px;
+            background-color: white;
+            color: #D62000;
+            cursor: pointer;
+        }
+
+        .help:hover {
+            box-shadow: 2px 2px 50px 10px white;
+            height: 90px;
+            background-size: 70px;
+            background-image: url('/Imagens/lampada2.png');
+            font-size: 25px;
+            background-color: white;
+            color: #D62000;
+            cursor: pointer;
+        }
+
+        .check:active,
+        .help:active {
+            background-color: white;
+            color: purple;
+        }
+
+        #start{
+            background-color: #BD321A;
+            color: wheat;
+        }
+
+        #start:active {
+            background-color: rebeccapurple;
+            color: white;
+            width: 205px;
+            height: 51px;
+        }
+
+        #start:hover {
+            background-color: aliceblue;
+            color: #BD321A;
+            box-shadow: 2px 2px 50px 10px white;
+            height: 51px;
+
+
+        }
+    </style>
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <style>
+        #sortable {
+            list-style-type: none;
+            margin: auto;
+            margin-top: 100px;
+        }
+
+        #sortable li {
+            margin: 3px 3px 3px 0;
+            padding: 1px;
+            float: left;
+            width: 50px;
+            height: 50px;
+            font-size: 30px;
+            text-align: center;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            $("#sortable").sortable();
+            $("#sortable").disableSelection();
+        });
+    </script>
+</head>
+
+<body>
+    <div id="principal">
+        <div id="startView">
+            <h2 id="nome_jogo">DESEMBARALHE</h2>
+            <button id="start" onclick="start()">INICIAR</button>
+        </div>
+        <div id="gameView" style="display: none;">
+            <div id="score"></div>
+            <div id="word"></div>
+            <ul id="sortable"></ul>
+            <div id="div_botoes">
+                <button class="check" onclick="check()">VERIFICAR</button>
+                <button onclick="help()" class="help">AJUDA</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        const game = {
+            score: 0,
+            words: [
+                { word: 'livro', help: 'contém páginas!' },
+                { word: 'computador', help: 'possui teclado!' },
+                { word: 'cadeira', help: 'possui encosto!' },
+                { word: 'telefone', help: 'permite comunicação!' },
+                { word: 'copo', help: 'contém líquido!' },
+                { word: 'lápis', help: 'escreve!' },
+                { word: 'televisão', help: 'exibe imagens!' },
+                { word: 'papel', help: 'pode ser escrito!' },
+                { word: 'sapato', help: 'veste o pé!' },
+                { word: 'relógio', help: 'marca o tempo!' },
+                { word: 'árvore', help: 'possui folhas!' },
+                { word: 'cachorro', help: 'late!' },
+                { word: 'gato', help: 'mia!' },
+                { word: 'bicicleta', help: 'possui pedais!' },
+                { word: 'avião', help: 'vai ao ar!' },
+                { word: 'ônibus', help: 'transporta pessoas!' },
+                { word: 'navio', help: 'navega nos mares!' },
+                { word: 'barco', help: 'navega em águas calmas!' },
+                { word: 'celular', help: 'realiza chamadas!' },
+                { word: 'espelho', help: 'reflete imagens!' },
+                { word: 'caneta', help: 'escreve em papel!' },
+                { word: 'ventilador', help: 'produz vento!' },
+                { word: 'geladeira', help: 'refrigera alimentos!' },
+                { word: 'faca', help: 'corta!' },
+                { word: 'garfo', help: 'espetado!' },
+                { word: 'colher', help: 'serve!' },
+                { word: 'fogão', help: 'cozinha alimentos!' },
+                { word: 'cama', help: 'permite descanso!' },
+                { word: 'travesseiro', help: 'apoia a cabeça!' },
+                { word: 'cobertor', help: 'aquece!' },
+                { word: 'sofá', help: 'para sentar!' },
+                { word: 'poltrona', help: 'confortável!' },
+                { word: 'quadro', help: 'exibe arte!' },
+                { word: 'teclado', help: 'digita caracteres!' },
+                { word: 'mouse', help: 'controla o cursor!' },
+                { word: 'carregador', help: 'recarrega baterias!' },
+                { word: 'bateria', help: 'fornece energia!' },
+                { word: 'chave', help: 'abre fechaduras!' },
+                { word: 'cartão', help: 'armazena informações!' },
+                { word: 'carteira', help: 'guarda dinheiro!' },
+                { word: 'óculos', help: 'melhora a visão!' },
+                { word: 'óculos de sol', help: 'protege os olhos!' },
+                { word: 'chapéu', help: 'protege a cabeça!' },
+                { word: 'agenda', help: 'organiza tarefas!' },
+                { word: 'laptop', help: 'computador portátil!' },
+                { word: 'mochila', help: 'transporta objetos!' },
+                { word: 'balde', help: 'armazena líquidos!' },
+                { word: 'vassoura', help: 'limpa o chão!' },
+                { word: 'régua', help: 'mede distâncias!' },
+                { word: 'tesoura', help: 'corta papel!' },
+                { word: 'toalha', help: 'seca o corpo!' },
+                { word: 'shampoo', help: 'limpa o cabelo!' },
+                { word: 'condicionador', help: 'hidrata o cabelo!' },
+                { word: 'espátula', help: 'vira alimentos!' },
+                { word: 'frigideira', help: 'cozinha alimentos!' },
+                { word: 'tigela', help: 'contém alimentos!' },
+                { word: 'prato', help: 'contém comida!' },
+                { word: 'guardanapo', help: 'limpa a boca!' },
+                { word: 'panela', help: 'cozinha alimentos!' },
+                { word: 'cadeado', help: 'protege!' },
+                { word: 'corrente', help: 'liga objetos!' },
+                { word: 'caixa', help: 'armazena objetos!' },
+                { word: 'sacola', help: 'transporta objetos!' },
+                { word: 'chave de fenda', help: 'aperta parafusos!' },
+                { word: 'martelo', help: 'bate pregos!' },
+                { word: 'serrote', help: 'corta madeira!' },
+                { word: 'pincel', help: 'pinta superfícies!' },
+                { word: 'tinta', help: 'pigmenta superfícies!' },
+                { word: 'borracha', help: 'apaga lápis!' },
+                { word: 'cola', help: 'une objetos!' },
+                { word: 'lupa', help: 'aumenta a visão!' },
+                { word: 'microscópio', help: 'amplia objetos!' },
+                { word: 'binóculo', help: 'amplia visão!' },
+                { word: 'telescópio', help: 'observa estrelas!' },
+                { word: 'bússola', help: 'indica direção!' },
+                { word: 'mapa', help: 'mostra localização!' },
+                { word: 'lanterna', help: 'ilumina!' },
+                { word: 'isqueiro', help: 'acende!' },
+                { word: 'fósforo', help: 'acende!' },
+                { word: 'vela', help: 'ilumina!' },
+                { word: 'lamparina', help: 'ilumina!' },
+                { word: 'abajur', help: 'ilumina!' },
+                { word: 'luminária', help: 'ilumina!' },
+                { word: 'bola', help: 'rola!' },
+                { word: 'boneca', help: 'brinca!' },
+                { word: 'carrinho', help: 'brinca!' },
+                { word: 'brinquedo', help: 'diverte!' }
+            ],
+            currentWord: null,
+            sortableElement: null,
+
+            shuffleWord(word) {
+                return word.split('').sort(() => Math.random() - 0.5).join('');
+            },
+
+            checkAnswer() {
+                const answer = this.getAnswer();
+                if (this.currentWord.word === answer) {
+                    this.score++;
+                    this.updateScore();
+                    this.reset();
+                    this.showRandomWord();
+                } else {
+                    alert('A palavra está incorreta!');
+                }
+            },
+
+            getAnswer() {
+                return Array.from(this.sortableElement.children).map(child => child.innerText).join('');
+            },
+
+            reset() {
+                this.sortableElement.innerHTML = '';
+            },
+
+            showRandomWord() {
+                let shuffledWord;
+                do{
+                this.currentWord = this.words[Math.floor(Math.random() * this.words.length)];
+                shuffledWord = this.shuffleWord(this.currentWord.word);
+                }while (this.currentWord == shuffledWord);
+                document.getElementById('word').innerText = shuffledWord;
+                this.createSortableList(shuffledWord);
+            },
+
+            createSortableList(word) {
+                this.sortableElement.innerHTML = '';
+                word.split('').forEach(char => {
+                    const li = document.createElement('li');
+                    li.innerText = char;
+                    li.classList.add('ui-state-default');
+                    this.sortableElement.appendChild(li);
+                });
+            },
+
+            updateScore() {
+                document.getElementById('score').innerText = this.score;
+            },
+
+            help() {
+                alert(this.currentWord.help);
+            },
+
+            startGame() {
+                this.sortableElement = document.getElementById('sortable');
+                document.getElementById('startView').style.display = 'none';
+                document.getElementById('gameView').style.display = 'block';
+                this.showRandomWord();
+            }
+        };
+
+        function start() {
+            game.startGame();
+        }
+
+        function check() {
+            game.checkAnswer();
+        }
+
+        function help() {
+            game.help();
+        }
+    </script>
+</body>
+
+</html>
